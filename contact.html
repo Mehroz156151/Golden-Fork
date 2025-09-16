@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Golden Fork | Contact</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<div id="header-container"></div>
+
+<section class="contact-page">
+  <h1>Contact Us</h1>
+  <p>Tell us about any issue, complaint, or suggestion. We value your feedback!</p>
+
+  <div class="contact-card">
+    <form id="contact-form">
+      <input type="text" id="name" placeholder="Your Name" required>
+      <input type="email" id="email" placeholder="Your Email" required>
+      <textarea id="message" placeholder="Your Message" required></textarea>
+      <button type="submit" class="btn">Send Message</button>
+      <p id="error-message"></p>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div id="footer-container"></div>
+
+<script src="shared.js"></script>
+<script>
+  const form = document.getElementById('contact-form');
+  const errorMessage = document.getElementById('error-message');
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const email = document.getElementById('email').value;
+
+    if (!email.includes('@')) {
+      errorMessage.textContent = 'Please enter a valid email.';
+      document.getElementById('email').style.border = '2px solid red';
+    } else {
+      errorMessage.textContent = 'Message sent successfully!';
+      document.getElementById('email').style.border = '';
+      form.reset();
+    }
+  });
+
+  document.getElementById('email').addEventListener('input', () => {
+    document.getElementById('email').style.border = '';
+    errorMessage.textContent = '';
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Golden Fork | Menu</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="header-container"></div>
+
+<section class="menu-page">
+  <h1>Our Menu</h1>
+
+  <div class="menu-filters">
+    <label><input type="radio" name="category" value="all" checked> All</label>
+    <label><input type="radio" name="category" value="breakfast"> Breakfast</label>
+    <label><input type="radio" name="category" value="lunch"> Lunch</label>
+    <label><input type="radio" name="category" value="dinner"> Dinner</label>
+    <label><input type="radio" name="category" value="fastfood"> Fast Food</label>
+    <label><input type="radio" name="category" value="special"> Special</label>
+    <label><input type="radio" name="category" value="beverage"> Beverage</label>
+  </div>
+
+  <div class="menu-grid" id="menu-container"></div>
+</section>
+
+<div id="footer-container"></div>
+
+<script src="shared.js"></script>
+<script>
+  fetch('MenuData.html')
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById('menu-container').innerHTML = data;
+
+      const radios = document.querySelectorAll('input[name="category"]');
+      const cards = document.querySelectorAll('.menu-card');
+      radios.forEach(radio => {
+        radio.addEventListener('change', () => {
+          const val = radio.value;
+          cards.forEach(card => {
+            card.style.display = (val === 'all' || card.dataset.category === val) ? 'block' : 'none';
+          });
+        });
+      });
+    });
+</script>
+
+</body>
+</html>

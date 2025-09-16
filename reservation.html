@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Golden Fork | Reservation</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="header-container"></div>
+
+<div class="reservation-page">
+  <h1>Reserve Your Table</h1>
+
+  <!-- BOOK TABLE -->
+  <div class="reservation-section">
+    <h2>Book Table</h2>
+    <button class="btn" onclick="toggleForm('bookForm')">Open Booking Form</button>
+
+    <form id="bookForm" class="res-box hidden" onsubmit="event.preventDefault(); bookTable();">
+      <input id="bookName" type="text" placeholder="Your Name" required>
+      <input id="bookPhone" type="text" placeholder="Phone Number" required>
+      <input id="bookPersons" type="number" placeholder="No. of Persons" required>
+      <input id="bookDate" type="date" required>
+      <input id="bookTime" type="time" required>
+      <button class="btn" type="submit">Book Now</button>
+    </form>
+  </div>
+
+  <!-- CHECK RESERVATION -->
+  <div class="reservation-section">
+    <h2>Check Reservation</h2>
+    <button class="btn" onclick="toggleForm('checkForm')">Open Check Form</button>
+
+    <form id="checkForm" class="res-box hidden" onsubmit="event.preventDefault(); checkReservation();">
+      <input id="checkName" type="text" placeholder="Your Name" required>
+      <input id="checkPhone" type="text" placeholder="Phone Number" required>
+      <button class="btn" type="submit">Check</button>
+    </form>
+  </div>
+
+  <div id="resMessage" class="res-message hidden"></div>
+</div>
+
+<div id="footer-container"></div>
+
+<script src="shared.js"></script>
+<script>
+  let reservations = [];
+
+  function toggleForm(formId) {
+    const form = document.getElementById(formId);
+    const otherForm = formId === 'bookForm' ? 'checkForm' : 'bookForm';
+    document.getElementById(otherForm).classList.add('hidden');
+    document.getElementById('resMessage').classList.add('hidden');
+    form.classList.toggle('hidden');
+  }
+
+  function bookTable() {
+    const name = bookName.value.trim();
+    const phone = bookPhone.value.trim();
+    const persons = bookPersons.value.trim();
+    const date = bookDate.value;
+    const time = bookTime.value;
+
+    if (!name || !phone || !persons || !date || !time) {
+      showMessage('Please fill all fields.', false);
+      return;
+    }
+
+    const tableNo = Math.floor(Math.random() * 50) + 1;
+    reservations.push({ name, phone, tableNo });
+
+    bookForm.classList.add('hidden');
+    showMessage(`✅ Table booked successfully for <strong>${name}</strong><br>Table No: <strong>${tableNo}</strong>`, true);
+    bookForm.reset();
+  }
+
+  function checkReservation() {
+    const name = checkName.value.trim();
+    const phone = checkPhone.value.trim();
+
+    if (!name || !phone) {
+      showMessage('Please enter both Name and Phone.', false);
+      return;
+    }
+
+    const found = reservations.find(r => r.name === name && r.phone === phone);
+
+    checkForm.classList.add('hidden');
+
+    if (found) {
+      showMessage(`✅ Reservation found for <strong>${found.name}</strong><br>Table No: <strong>${found.tableNo}</strong>`, true);
+    } else {
+      showMessage(`❌ No reservation found for <strong>${name}</strong>.`, false);
+    }
+    checkForm.reset();
+  }
+
+  function showMessage(text, success) {
+    const msgBox = document.getElementById('resMessage');
+    msgBox.innerHTML = `<h3>${success ? 'Reservation Status' : 'Error'}</h3><p>${text}</p>`;
+    msgBox.style.background = success
+      ? 'linear-gradient(135deg,#f1c40f,#c0392b)'
+      : 'linear-gradient(135deg,#e74c3c,#c0392b)';
+    msgBox.classList.remove('hidden');
+  }
+</script>
+
+</body>
+</html>
