@@ -15,7 +15,7 @@
 
   <div class="reservation-section">
     <h2>Book Table</h2>
-    <button class="btn" onclick="toggleForm('bookForm')">Open Booking Form</button>
+    <button class="btn" onclick="toggleForm('bookForm')">Reserve Table</button>
 
     <form id="bookForm" class="res-box hidden" onsubmit="event.preventDefault(); bookTable();">
       <input id="bookName" type="text" placeholder="Your Name" required>
@@ -29,7 +29,7 @@
 
   <div class="reservation-section">
     <h2>Check Reservation</h2>
-    <button class="btn" onclick="toggleForm('checkForm')">Open Check Form</button>
+    <button class="btn" onclick="toggleForm('checkForm')">Check Reservation</button>
 
     <form id="checkForm" class="res-box hidden" onsubmit="event.preventDefault(); checkReservation();">
       <input id="checkName" type="text" placeholder="Your Name" required>
